@@ -64,7 +64,7 @@ function runSimpleCRM() {
       // Update the spreadsheet row to show we've never emailed
       var range = sheet.getRange(currentRow, COLUMN_WHERE_MAGIC_BEGINS,1, 4 ).setValues([["NEVER", "", "", ""]] );
       
-      //  And cary one
+      //  And carry one
       lastRowProcessed = currentRow;
       cache.put("lastRow", currentRow, 60*60*24); // cache for 25 minutes    
       continue;
