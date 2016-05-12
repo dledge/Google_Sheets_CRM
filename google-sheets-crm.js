@@ -18,14 +18,14 @@ var COLUMN_WHERE_MAGIC_BEGINS = 7;
 // And this is the column where your email addresses are.  Again, a value of 1 means the first column.
 var COLUMN_WITH_EMAIL_ADDRESSES = 2;
 
-function catParty() {
+function runSimpleCRM() {
   
   // Use the cache to determine how far we got last time before the inevitable 5 minute Google timeout
   var cache = CacheService.getScriptCache(); 
   var lastRowProcessed = cache.get("lastRow")*1.0;
   
   // If this cache doesn't yet exist, create it and set last row to 1
-  if (lastRowProcessed == null) {
+  if (lastRowProcessed == null || lastRowProcessed == 0) {
     lastRowProcessed = 1;
     cache.put("lastRow", lastRowProcessed, 60*60*24); // cache for 25 minutes
   }  
@@ -132,93 +132,3 @@ function catParty() {
     Logger.log("processed "+currentRow);   
   }
 }
-
-
-/*
-function getEmailAddress(name,domain) {
-  
-  var url = "54.152.93.219/ssearch/search.php?q="+name+"%20"+"@"+domain;
-  var result = JSON.parse(UrlFetchApp.fetch(url).getContentText());
-  
-  var results = result['bossresponse']['web']['results'];
-  
-  var found = false;
-  for (var i in results) {
-   var abstract=results[i]['abstract'];
-  
-    if (abstract.search('@'+domain)>= 0) {
-      found = true;
-    } else {
-      found = false;
-    }
-  }
-}
-
-function testDomain() {
- var res = getEmailAddress("Tom essery","timex.com");
-  res = res;
-  
-}
-
-
-function GetLastEmail(email) {
-  var threads = GmailApp.search('from:me to:'+email);
-  
-  if (threads.length == 0) return ["Never","",""]
-  
-  var latestDate = new Date(2010, 1, 1);
-  
-  var starredMsg = "";
-  
-  for (var thread in threads) {
-    var threadDate = threads[thread].getLastMessageDate();
-        
-    if (threadDate > latestDate) {
-      latestDate = threadDate;
-
-      if (threads[thread].hasStarredMessages()) {
-        starredMsg = "Y";
-      } else {
-        starredMsg = "";
-      }      
-    }    
-  }
-  
-  
-  var daysSinceContact = Math.round(Math.abs((today.getTime() - latestDate.getTime())/(oneDay)));
-  var latestDate = Utilities.formatDate(latestDate, Session.getScriptTimeZone(),  "MMM d yyyy");
- 
-//  return Utilities.formatDate(latestDate, Session.getScriptTimeZone(),  "MMM d yyyy HH:mm:ss");
-  return [latestDate, daysSinceContact, starredMsg];
-}
-
-
-
-function run() {
-  
-  
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var ROWS = sheet.getLastRow();
-  var range = sheet.getRange(2, 2, ROWS, 1);
-  var values = range.getValues();  
-  
-  
-  var latestDates = []
-  
-  for (var v in values) {
-    var email = values[v][0];
-    if (!email) {
-      latestDates.push(["","",""]);
-    } else {
-      var lastContact = GetLastEmail(email);    
-      latestDates.push(lastContact)
-    }
-  }
-  
-  var range = sheet.getRange(2, 7, ROWS, 3);
-  var values = range.setValues(latestDates);  
-  
-  
- // res = GetLastEmail('cbonavito@nyas.org');
-}
-*/
