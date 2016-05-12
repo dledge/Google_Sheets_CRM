@@ -1,4 +1,4 @@
-# Google_Sheets_CRM
+# Simple Google Sheets CRM
 
 This is a simple but powerful CRM using Google Sheets, Gmail, and Apps Scripts.
 
